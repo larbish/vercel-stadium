@@ -21,7 +21,11 @@ jobs:
         id: lint_pr_title
         with:
           scopes: |
-            starter
+            arena
+            coach
+            scene
+            server
+            ui
             docs
             deps
             ci

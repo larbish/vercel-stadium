@@ -15,7 +15,7 @@ import type { Player } from '#shared/types/game'
  */
 
 // The signed cookie IS each player's identity. Renamed with the Vercel Stadium rebrand;
-// existing `mugen_id` cookies no longer match, so players re-onboard once.
+// existing `tempest_id` cookies no longer match, so players re-onboard once.
 export const COOKIE_NAME = 'stadium_id'
 
 export type Identity = Pick<Player, 'id' | 'name' | 'color' | 'character'>

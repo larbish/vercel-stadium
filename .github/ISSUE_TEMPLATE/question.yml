@@ -1,5 +1,5 @@
 name: "Question"
-description: Ask a question about the starter
+description: Ask a question about Vercel Stadium
 title: "[question] "
 labels: [question]
 body:

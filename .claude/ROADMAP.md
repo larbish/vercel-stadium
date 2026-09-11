@@ -34,9 +34,9 @@
 ### World, art & assets
 - [x] **Stadium arena** (`ARENA_LAYOUT` 56×56 + `generateArena`): open sand disc with the Vercel centre mark, walled in by an unbroken tile ring — there is no exit, the arena is the whole world. The bowl around it (tiers, crowd, LED bands, roof, floodlights) is procedural in `app/utils/stadium.ts`; `shared/data/arena-structure.json` is an optional hand-edited kit-piece layer (empty)
 - [x] Character GLBs: 8 Universal-skeleton Peasant/Ranger bodies converted (M/F × 2 hairstyles) sharing one `animations.glb` clip library (Idle/Run/Jump/Roll), WebP textures; only the two Developer bodies are used
-- [x] Asset pipeline: `convert_universal_characters.py` (WebP-crash byte-sanitizer), `rebuild_animations.py`, `convert_props.py`, `convert_fantasy.sh`/`convert_kits.sh` (`gltf-transform optimize` → meshopt + WebP), `make_og.py`
+- [x] Asset pipeline: `convert_universal_characters.py` (WebP-crash byte-sanitizer), `rebuild_animations.py`, `convert_props.py`, `convert_fantasy.sh`/`convert_kits.sh` (`gltf-transform optimize` → meshopt + WebP)
 - [x] ~~Dev-only in-game world editor~~ **removed 2026-09-10** (`useEditor`, `hubEditor`, `EditorPanel`, `/api/editor/save`, `public/thumbnails` + `make_thumbnails.py`, `PROP_CATALOG`/`ALL_PROP_KINDS`). The arena JSON (`arena-props.json`, `arena-structure.json`, `arena-coach.json`) is edited by hand. Side effect: `arenaOnly()` now filters *every* kit catalog, so referenced nature-kit kinds load in play (they previously only loaded inside the editor)
-- [x] **Real `og.png`** rendered from game assets (`make_og.py`)
+- [x] **Real `og.png`** captured from the stadium via the dev-only `__ogShot()` hook in `ArenaScene.vue` (2026-09-11; replaced the Blender `make_og.py` render)
 
 ### Ship
 - [x] `git init`, `benjamincanac/tempest` repo created & pushed (upstream); forked to `larbish/vercel-stadium` on 2026-09-11
@@ -49,7 +49,7 @@
 - [x] **The Oracle renamed Coach (2026-09-11)** — display name `COACH_NAME`, files (`coach.ts`, `coachDocs.ts`, `useCoach.ts`, `coach3d.ts`, `arena-coach.json`, `coach-ai` agent), the `coach` frame, prompts and prose; Coach now posts a local self-intro chat line on the first `welcome`
 - [x] **Coach = the vercel.com triangle**, same 2.2-unit height as the old monster, floating and swaying over a bed of smoke
 - [x] **Rename to Vercel Stadium** (2026-09-11): `maze.ts`→`arena.ts`, `MazeScene`→`ArenaScene`, `hub-*.json`→`arena-*.json`, `generateHub`→`generateArena`, cookie `tempest_id`→`stadium_id` (everyone re-onboards once), palette tokens `stadium-*`, ▲ logo/favicon, site metadata; deleted the old game's leftovers (`models/monsters`, `character.glb`, `portal_gate.glb`, `torch.glb`, `make_portal.py`, `make_assets.py`, the broken `run-mmo` skill)
-- [ ] `scripts/make_og.py` + `public/og.png` still render the medieval door + statues as the OG hero — rebuild from the stadium (and drop `make_door.py` / `colosseum_door.glb` once done)
+- [x] **New OG image** (2026-09-11): `public/og.png` is a supersampled in-browser capture of the stadium (Coach centred, LED bands, crowd) with the ▲ Vercel Stadium wordmark composited; `make_og.py`, `make_door.py` and `colosseum_door.glb` deleted
 - [ ] Carry the swag beyond the arena: HUD/gate/palette in Vercel black & white (the `stadium-*` scale is still the old slime blue)
 - [ ] The kit GLBs under `public/models/{props,fantasy,dungeon,crypt,castle,nature,village}` (~24 MB) and `propCatalog.ts` load nothing in play (both arena JSON layers are empty) — delete them or place something
 

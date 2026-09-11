@@ -9,7 +9,7 @@ pnpm install
 pnpm dev
 ```
 
-Local dev uses Nitro's native crossws server, so the realtime demo works with no extra setup — open `http://localhost:3000` in two tabs. Cross-instance Redis is only exercised in production.
+Local dev uses Nitro's native crossws server, so the arena works with no extra setup — open `http://localhost:3000` in two tabs. The Coach needs an `AI_GATEWAY_API_KEY` in `.env`; without one it stays quiet.
 
 Before opening a pull request:
 
@@ -22,13 +22,14 @@ pnpm build
 ## Pull requests
 
 - Use [Conventional Commits](https://www.conventionalcommits.org/) in PR titles (e.g. `feat: add typing indicators`).
-- Keep changes focused. This is a minimal template: prefer small, copy-paste-friendly diffs.
+- Keep changes focused. Gameplay-affecting code (position, collision, elevation) lives in `shared/utils/arena.ts` so server and client prediction never disagree.
 - Update the README when setup steps or architecture change.
 
 ## Realtime and secrets
 
-- Do not commit `.env` or a real `REDIS_URL`.
+- Do not commit `.env`, `AI_GATEWAY_API_KEY` or `NUXT_SESSION_PASSWORD`.
 - Keep the wire protocol in [`shared/types/game.ts`](shared/types/game.ts) as the single source of truth shared by client and server.
+- The server is authoritative: never accept positions from clients.
 
 ## Questions
 

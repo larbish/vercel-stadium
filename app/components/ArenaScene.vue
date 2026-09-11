@@ -32,6 +32,7 @@ import {
   SphereGeometry,
   Sprite,
   SpriteMaterial,
+  Vector2,
   Vector3,
 } from 'three'
 import type { AnimationAction, AnimationClip } from 'three'
@@ -113,7 +114,7 @@ const props = defineProps<{ game: UseGame, held: MoveInput, view: ViewState }>()
 // Coach proximity/speech state, shared with GameScene and the HUD.
 const coach = useCoach()
 
-const { scene, camera: cameraManager } = useTresContext()
+const { scene, camera: cameraManager, renderer } = useTresContext()
 const camera = cameraManager.activeCamera
 const { onBeforeRender } = useLoop()
 
@@ -1327,6 +1328,83 @@ onUnmounted(() => {
 if (import.meta.dev) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(window as any).__arena = { local, camera, game: props.game, held: props.held, view: props.view }
+
+  /**
+   * OG image capture (public/og.png). Frames the stadium from a fixed camera, renders one
+   * 1200×630 frame supersampled, composites the title, returns a PNG data URL. Pair it with
+   * `__envOverride` for the sky. The live camera is restored afterwards.
+   */
+  interface OgShotOptions {
+    pos?: [number, number, number]
+    target?: [number, number, number]
+    fov?: number
+    /** Supersampling factor for the 3D frame. */
+    scale?: number
+    title?: string | false
+    subtitle?: string
+  }
+  const drawOgTitle = (ctx: CanvasRenderingContext2D, w: number, h: number, title: string, subtitle: string) => {
+    // Bottom-left black gradient so the wordmark reads over any sky.
+    const grad = ctx.createLinearGradient(0, h * 0.42, 0, h)
+    grad.addColorStop(0, 'rgba(0,0,0,0)')
+    grad.addColorStop(1, 'rgba(0,0,0,0.92)')
+    ctx.fillStyle = grad
+    ctx.fillRect(0, 0, w, h)
+    const x = 72
+    const baseline = h - 118
+    // ▲, then the title on the same line.
+    const tri = 44
+    ctx.fillStyle = '#fff'
+    ctx.beginPath()
+    ctx.moveTo(x + tri / 2, baseline - tri - 2)
+    ctx.lineTo(x + tri, baseline - 2)
+    ctx.lineTo(x, baseline - 2)
+    ctx.closePath()
+    ctx.fill()
+    ctx.font = '600 58px Geist, system-ui, -apple-system, sans-serif'
+    ctx.textBaseline = 'alphabetic'
+    ctx.fillText(title, x + tri + 22, baseline - 4)
+    ctx.fillStyle = 'rgba(255,255,255,0.72)'
+    ctx.font = '400 26px Geist, system-ui, -apple-system, sans-serif'
+    ctx.fillText(subtitle, x, baseline + 46)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(window as any).__ogShot = (opts: OgShotOptions = {}) => {
+    const gl = renderer.instance
+    const cam = camera.value
+    if (!gl || !(cam instanceof PerspectiveCamera)) return null
+    const W = 1200
+    const H = 630
+    const scale = opts.scale ?? 2
+    const prevSize = gl.getSize(new Vector2())
+    const prevRatio = gl.getPixelRatio()
+    const prev = { aspect: cam.aspect, fov: cam.fov, pos: cam.position.clone(), quat: cam.quaternion.clone() }
+    gl.setPixelRatio(scale)
+    gl.setSize(W, H, false)
+    cam.aspect = W / H
+    cam.fov = opts.fov ?? 50
+    cam.position.set(...(opts.pos ?? [ARENA_LAYOUT.center.x - 10, 5.5, ARENA_LAYOUT.center.y + 10]))
+    cam.lookAt(...(opts.target ?? [ARENA_LAYOUT.center.x, 2, ARENA_LAYOUT.center.y - 3]))
+    cam.updateProjectionMatrix()
+    gl.render(scene.value, cam)
+    const out = document.createElement('canvas')
+    out.width = W
+    out.height = H
+    const ctx = out.getContext('2d')!
+    ctx.drawImage(gl.domElement, 0, 0, W, H)
+    if (opts.title !== false) {
+      drawOgTitle(ctx, W, H, opts.title ?? 'Vercel Stadium', opts.subtitle ?? 'A multiplayer arena on Vercel WebSockets, with an AI Coach')
+    }
+    const url = out.toDataURL('image/png')
+    gl.setPixelRatio(prevRatio)
+    gl.setSize(prevSize.x, prevSize.y, false)
+    cam.aspect = prev.aspect
+    cam.fov = prev.fov
+    cam.position.copy(prev.pos)
+    cam.quaternion.copy(prev.quat)
+    cam.updateProjectionMatrix()
+    return url
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 name: "Bug Report"
-description: Report a problem with the starter
+description: Report a problem with Vercel Stadium
 title: "[bug] "
 labels: [bug]
 body:
@@ -11,7 +11,7 @@ body:
     id: runtime
     attributes:
       label: Runtime and OS
-      placeholder: e.g. Node 22, pnpm 10, macOS 15
+      placeholder: e.g. Node 24, pnpm 11, macOS 15, Chrome 140
     validations:
       required: true
   - type: dropdown
@@ -19,12 +19,13 @@ body:
     attributes:
       label: Area
       options:
-        - WebSocket connection / upgrade
-        - Presence / cursors / reactions
-        - Redis / cross-instance state
+        - WebSocket connection / upgrade / reconnects
+        - Movement, collision or prediction
+        - The Coach (AI answers, docs tools)
+        - 3D scene / rendering / performance
+        - Chat, HUD or the entry flow
         - Local dev (crossws)
         - Deployment (Vercel)
-        - UI
         - Documentation
         - Other
     validations:

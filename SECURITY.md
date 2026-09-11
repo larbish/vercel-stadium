@@ -10,6 +10,6 @@ Include:
 
 - A clear description and impact
 - Steps to reproduce or a minimal code sample, when safe to share
-- Whether the issue involves the WebSocket upgrade, message handling, or Redis state
+- Whether the issue involves the WebSocket upgrade, message handling, the identity cookie, or the Coach's tool calls
 
 We will triage reports as soon as we can. Thank you for helping keep users safe.

@@ -4,9 +4,9 @@ description: >
   3D asset pipeline — Blender headless conversion, glTF processing/compression,
   and the models under public/models/**. Use for the scripts/*.py + scripts/*.sh
   conversion tooling (convert_props.py, convert_universal_characters.py,
-  rebuild_animations.py, convert_fantasy.sh, convert_kits.sh),
-  the OG image generator (make_og.py), gltf-transform compression, and importing
-  new Quaternius packs. NOT for how models are rendered in-game (that's scene-3d).
+  rebuild_animations.py, convert_fantasy.sh, convert_kits.sh), gltf-transform
+  compression, and importing new Quaternius packs. The OG image is a browser
+  capture (see below), not a Blender render. NOT for how models are rendered in-game (that's scene-3d).
 model: inherit
 ---
 
@@ -22,15 +22,14 @@ files the game loads, and the scripts that do it.
   track per clip so the exporter emits one animation each.
 - `scripts/convert_fantasy.sh`, `scripts/convert_kits.sh`,
   `scripts/convert_new_kits.py` — batch conversion entry points.
-- `scripts/make_door.py` — built `colosseum_door.glb`, the old game's great door.
-  Nothing loads it in play any more; it survives only because `make_og.py` still
-  renders it. Contract if you touch it: objects named `Shard_*` are animated and
-  material `Rune` is emissive-pulsed, and compressing needs `gltf-transform
-  optimize --join false --flatten false --instance false` or the named nodes get
-  merged away. (`make_portal.py`, `make_assets.py`, `portal_gate.glb`,
+- `public/og.png` (1200×630) — captured from the live stadium, not rendered in Blender.
+  `ArenaScene.vue` exposes a dev-only `window.__ogShot({ pos, target, fov, title, subtitle })`
+  that renders one supersampled frame from a fixed camera, composites the wordmark and
+  returns a PNG data URL; the defaults are the shipped framing. Regenerate: `pnpm dev`, enter
+  the arena, run `__ogShot()` in the console and save the data URL over `public/og.png`.
+  The hook belongs to `scene-3d`; you own the file. (`make_og.py`, `make_door.py`,
+  `colosseum_door.glb`, `make_portal.py`, `make_assets.py`, `portal_gate.glb`,
   `character.glb`, `torch.glb` and `models/monsters` were removed with the old game.)
-- `scripts/make_og.py` — social OG image. **Stale:** it still stages the medieval
-  door + statues; the stadium needs a new hero render.
 - `public/models/**` — the shipped `.glb` output (characters, plus the props /
   fantasy / dungeon / crypt / castle / nature / village kits) and `textures/`. With
   both arena JSON layers empty, no kit GLB loads in play — they are catalog only.

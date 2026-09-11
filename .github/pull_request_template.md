@@ -2,7 +2,7 @@
 PR title should follow Conventional Commits: https://www.conventionalcommits.org
 
 Types: breaking, feat, fix, build, ci, docs, enhancement, chore, perf, style, test, refactor, revert
-Scopes: starter, docs, deps, ci
+Scopes: arena, coach, scene, server, ui, docs, deps, ci
 -->
 
 ### Linked issue
