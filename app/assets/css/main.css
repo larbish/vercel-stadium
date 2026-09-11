@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme static {
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  --color-blue-50: #F5F9FD;
+  --color-blue-100: #E7F1FA;
+  --color-blue-200: #CCE9F6;
+  --color-blue-300: #B0D3EF;
+  --color-blue-400: #93B9E8;
+  --color-blue-500: #6E99D4;
+  --color-blue-600: #4E7EBE;
+  --color-blue-700: #3A71A4;
+  --color-blue-800: #305C86;
+  --color-blue-900: #2A4B6C;
+  --color-blue-950: #1B2F45;
+
+  --color-stadium-50: #EEF8FF;
+  --color-stadium-100: #D0E1F0;
+  --color-stadium-200: #A3B1C6;
+  --color-stadium-300: #5CC8E4;
+  --color-stadium-400: #00DDEB;
+  --color-stadium-500: #0681B4;
+  --color-stadium-600: #0A5C8A;
+  --color-stadium-700: #112A43;
+  --color-stadium-800: #0C1A2F;
+  --color-stadium-900: #071120;
+  --color-stadium-950: #040A14;
+
+  /* Custom Gradient Utility utilizing the scale */
+  --background-image-login-button: linear-gradient(180deg, var(--color-stadium-300) 0%, var(--color-stadium-500) 100%);
+}
+
+.dark {
+  --ui-bg: #0a0a0a;
+  --ui-bg-muted: oklch(17.5% 0 0);
+  --ui-bg-elevated: oklch(20.5% 0 0);
+  --ui-bg-accented: oklch(26.9% 0 0);
+  --ui-border: oklch(26.9% 0 0);
+  --ui-border-muted: oklch(23% 0 0);
+}
+
+html {
+  overscroll-behavior: none;
+}

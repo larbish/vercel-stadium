@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- Vercel Stadium: the ▲ on black. -->
+  <rect width="256" height="256" rx="48" fill="#000"/>
+  <path d="M128 56 L208 200 H48 Z" fill="#fff"/>
+</svg>
