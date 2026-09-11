@@ -1,6 +1,8 @@
 # Vercel Stadium
 
-A shared 3D stadium. **Nuxt** (nightly) + **TresJS** (three.js) on the client, **Nitro v3 native WebSockets** on the server, deployed to **Vercel**. It exists to demo two things: the Vercel WebSocket upgrade under a real 20 Hz authoritative game loop, and the Coach — an AI agent plugged into the documentation (MCP servers + llms.txt/Markdown) of every Vercel framework and primitive, answering product questions in the shared chat and reading live game state. Everyone shares one arena, walks around, and chats. The arena is bundled data, so no geometry ever travels over the wire — only players.
+A shared 3D stadium. **Nuxt** (nightly) + **TresJS** (three.js) on the client, **Nitro v3 native WebSockets** on the server, deployed to **Vercel**. Built as a demo for [Three.js Conf Paris 2026](https://threejs.paris/). It exists to demo two things: the Vercel WebSocket upgrade under a real 20 Hz authoritative game loop, and the Coach — an AI agent plugged into the documentation (MCP servers + llms.txt/Markdown) of every Vercel framework and primitive, answering product questions in the shared chat and reading live game state. Everyone shares one arena, walks around, and chats. The arena is bundled data, so no geometry ever travels over the wire — only players.
+
+Based on [Benjamin Canac](https://github.com/benjamincanac)'s Tempest (open source soon), rebranded with Vercel. The architecture below is his; the stadium, the LED bands, the ▲ Coach and its Vercel docs are the rebrand. The real project lives with Benjamin — this repo is the conference snapshot.
 
 Roadmap / status is [.claude/ROADMAP.md](.claude/ROADMAP.md) — the source of truth for what's done and next. Keep it current as work lands.
 

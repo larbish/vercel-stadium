@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in this starter!
+Thanks for your interest in Vercel Stadium! This repo is a [Three.js Conf Paris](https://threejs.paris/) demo based on [Benjamin Canac](https://github.com/benjamincanac)'s **Tempest** (open source soon), rebranded with Vercel. Follow Benjamin if you want to track — or contribute to — the real project.
 
 ## Development
 

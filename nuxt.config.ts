@@ -5,7 +5,7 @@ const site = {
   name: 'Vercel Stadium',
   title: 'Vercel Stadium — a multiplayer arena on Vercel WebSockets, with an AI Coach',
   description:
-    'A shared 3D stadium on the Vercel Functions WebSocket beta. Walk the LED floor with everyone else online, chat, and ask the Coach — an AI agent plugged into the documentation of every Vercel framework and primitive — anything about the platform. Authoritative Nitro game loop, TresJS rendering, one WebSocket per player.',
+    'A Three.js Conf Paris 2026 demo: a shared 3D stadium on the Vercel Functions WebSocket beta. Walk the LED floor with everyone else online, chat, and ask the Coach — an AI agent plugged into the documentation of every Vercel framework and primitive — anything about the platform. The real project is Benjamin Canac\'s Tempest, open source soon.',
   tagline: 'Nuxt × Vercel WebSockets × AI SDK',
   repo: 'https://github.com/larbish/vercel-stadium',
   deployUrl:
@@ -79,6 +79,8 @@ export default defineNuxtConfig({
               'codeRepository': site.repo,
               'programmingLanguage': 'TypeScript',
             },
+            // Credit: Vercel Stadium is a Three.js Conf Paris demo of Benjamin Canac's Tempest.
+            'isBasedOn': 'https://github.com/benjamincanac',
           }),
         },
       ],

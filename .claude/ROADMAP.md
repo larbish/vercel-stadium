@@ -2,9 +2,10 @@
 
 > A shared 3D stadium: walk around and chat, and ask the Coach — an AI agent plugged
 > into the docs of every Vercel framework and primitive — anything about Vercel.
-> Nuxt + TresJS + Vercel WebSockets + AI SDK. It exists to demo the Vercel WebSocket
-> upgrade under a real authoritative game loop, plus an AI agent living inside that loop.
-> Renamed from Tempest (and before that Mugen) on 2026-09-11, then split into its own repo `larbish/vercel-stadium`. Upstream is Benjamin Canac's `benjamincanac/tempest`.
+> Nuxt + TresJS + Vercel WebSockets + AI SDK. A Three.js Conf Paris 2026 demo of the
+> Vercel WebSocket upgrade under a real authoritative game loop, plus an AI agent
+> living inside that loop. The real project is Benjamin Canac's Tempest (OSS soon).
+> Renamed from Tempest (and before that Mugen) on 2026-09-11, then split into its own repo `larbish/vercel-stadium`. Upstream is Benjamin Canac's Tempest.
 > This file is the source of truth for what's done and what's next — update it as work lands.
 
 ## Status: done ✓

@@ -49,7 +49,9 @@ agent — hand coach work there.
    name and accent. The socket opens only for `playing`. **Log out** (Escape menu)
    calls `DELETE /api/auth` to clear the cookie and then reloads: the reload is
    what closes the socket (`useGame` has no in-place disconnect) and re-runs the
-   flow, which lands on the gate.
+   flow, which lands on the gate. Gate and Escape menu both carry a short credit:
+   this repo is a Three.js Conf Paris demo; the real project is Benjamin Canac's
+   Tempest (OSS soon).
 6. **In-game session actions live in the Escape menu** (WoW-style overlay in
    `index.vue`: controls reference, fullscreen, log out, return-to-game) — not in HUD
    buttons. Two open paths, both needed: a bare

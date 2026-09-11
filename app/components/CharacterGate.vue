@@ -51,7 +51,7 @@ onMounted(() => input.value?.inputRef?.focus())
       >
       <div class="flex flex-col leading-tight">
         <span class="text-sm font-semibold tracking-[0.2em] text-highlighted">VERCEL STADIUM</span>
-        <span class="text-[11px] text-muted">Enter the arena</span>
+        <span class="text-[11px] text-muted">A Three.js Conf Paris demo</span>
       </div>
     </div>
 
@@ -102,5 +102,23 @@ onMounted(() => input.value?.inputRef?.focus())
         @click="submit"
       />
     </div>
+
+    <p class="absolute inset-x-6 bottom-6 z-10 mx-auto max-w-md text-center text-[11px] leading-relaxed text-muted">
+      A demo for
+      <a
+        href="https://threejs.paris/"
+        target="_blank"
+        rel="noopener"
+        class="text-highlighted underline decoration-current/50 hover:decoration-current"
+      >Three.js Conf Paris</a>.
+      The real project is
+      <a
+        href="https://github.com/benjamincanac"
+        target="_blank"
+        rel="noopener"
+        class="text-highlighted underline decoration-current/50 hover:decoration-current"
+      >Benjamin Canac</a>'s
+      — follow him, it should be open source soon.
+    </p>
   </div>
 </template>

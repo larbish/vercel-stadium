@@ -10,17 +10,17 @@ It's a demo of two things: a real authoritative game loop running inside a Verce
 Everything is simulated server-side and fanned out over the socket. No database, no game engine backend. The stadium, the textures and the crowd are code.
 
 > [!NOTE]
+> **This is a demo** for [Three.js Conf Paris 2026](https://threejs.paris/) — not the ongoing project. The real game is [Benjamin Canac](https://github.com/benjamincanac)'s **Tempest**, which should be open source soon. Follow him on [GitHub](https://github.com/benjamincanac) or [X](https://x.com/benjamincanac) to catch its evolution.
+>
 > WebSockets in Vercel Functions are in [beta](https://vercel.com/docs/release-phases#beta).
 
 ## A big thank you to Benjamin Canac
 
-Let's be clear about one thing first: **this project is not my idea, and almost none of it is my code.**
+This demo is based on an idea and a codebase by [Benjamin Canac](https://github.com/benjamincanac): **Tempest**, a shared 3D world on Vercel WebSockets with an AI agent living inside the game loop. The authoritative Nitro tick loop, the shared kinematics that server and client both run, the TresJS scene and third-person prediction, the signed-cookie identity with no database, the in-process agent reading live state, the Blender pipeline for the characters: all of that is his work.
 
-Everything here comes from [Benjamin Canac](https://github.com/benjamincanac) and his [`benjamincanac/tempest`](https://github.com/benjamincanac/tempest): the authoritative Nitro game loop, the shared kinematics that server and client both run, the TresJS scene and third-person prediction, the signed-cookie identity with no database, the AI agent living *inside* the game loop and reading live state, the Blender pipeline for the characters, the way it all survives Vercel WebSocket reconnects. The whole architecture is his, and so is the taste.
+Vercel Stadium is that same project, rebranded with Vercel for [Three.js Conf Paris](https://threejs.paris/): a stadium bowl, an LED floor scrolling the Vercel frameworks, the ▲ as the Coach, the Coach plugged into Vercel's docs, and a Developer look with the black tee and cap.
 
-I stole everything and rebranded it with Vercel stuff. A stadium bowl instead of his tower, an LED floor scrolling the Vercel frameworks, the ▲ as the Coach, the Coach plugged into Vercel's docs, the Developer look with the black tee and cap. That's the paint job. The building is Benjamin's.
-
-So: **thank you, Benjamin.** Go star the original, that's where the credit belongs: https://github.com/benjamincanac/tempest
+Thank you, Benjamin. Tempest should be open source soon — follow him on [GitHub](https://github.com/benjamincanac) or [X](https://x.com/benjamincanac) if you want to follow the real project.
 
 ## Deploy
 

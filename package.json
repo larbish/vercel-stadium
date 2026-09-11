@@ -2,7 +2,7 @@
   "name": "vercel-stadium",
   "private": true,
   "type": "module",
-  "description": "Vercel Stadium — a shared 3D stadium on Vercel WebSockets with the Coach, an AI agent plugged into the docs of every Vercel framework and primitive. Authoritative Nitro game loop, TresJS rendering, one realtime connection per player.",
+  "description": "Three.js Conf Paris 2026 demo — a shared 3D stadium on Vercel WebSockets with the Coach, an AI agent plugged into the docs of every Vercel framework and primitive. The real project is Benjamin Canac's Tempest (open source soon).",
   "packageManager": "pnpm@11.10.0",
   "engines": {
     "node": ">=24"
@@ -12,13 +12,14 @@
     "url": "git+https://github.com/larbish/vercel-stadium.git"
   },
   "author": {
-    "name": "Baptiste Leproux",
-    "url": "https://github.com/larbish"
+    "name": "Benjamin Canac",
+    "email": "canacb1@gmail.com",
+    "url": "https://github.com/benjamincanac"
   },
   "contributors": [
     {
-      "name": "Benjamin Canac",
-      "url": "https://github.com/benjamincanac"
+      "name": "Baptiste Leproux",
+      "url": "https://github.com/larbish"
     }
   ],
   "license": "MIT",

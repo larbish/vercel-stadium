@@ -242,7 +242,7 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
           class="absolute inset-0 z-40 flex select-none items-center justify-center bg-black/50"
           @click.self="resume"
         >
-          <div class="flex w-60 flex-col gap-4 rounded-xl bg-black/60 p-4 ring ring-white/10 backdrop-blur">
+          <div class="flex w-72 flex-col gap-4 rounded-xl bg-black/60 p-4 ring ring-white/10 backdrop-blur">
             <p class="text-center text-[10px] font-medium uppercase tracking-widest text-muted">
               Game menu
             </p>
@@ -300,6 +300,24 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
                 @click="resume"
               />
             </div>
+
+            <p class="text-center text-[11px] leading-relaxed text-muted">
+              A demo for
+              <a
+                href="https://threejs.paris/"
+                target="_blank"
+                rel="noopener"
+                class="text-highlighted underline decoration-current/50 hover:decoration-current"
+              >Three.js Conf Paris</a>.
+              The real project is
+              <a
+                href="https://github.com/benjamincanac"
+                target="_blank"
+                rel="noopener"
+                class="text-highlighted underline decoration-current/50 hover:decoration-current"
+              >Benjamin Canac</a>'s
+              — follow him, it should be OSS soon.
+            </p>
           </div>
         </div>
       </Transition>
