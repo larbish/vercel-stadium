@@ -80,4 +80,5 @@ export const MAX_CHAT_LENGTH = 240
  */
 export const COACH_ID = 'coach'
 export const COACH_NAME = 'Coach'
-export const COACH_COLOR = '#7fd0ff'
+// Light neutral, not the primary blue: keeps Coach distinct from System lines.
+export const COACH_COLOR = '#d4d4d8'
