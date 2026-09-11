@@ -46,6 +46,7 @@ const view = {
 
 const root = ref<HTMLDivElement | null>(null)
 const pointerLocked = ref(false)
+const touch = useTouchDevice()
 
 /**
  * Hold Alt to surface the OS cursor and freeze mouse-look, so the HUD buttons
@@ -172,7 +173,8 @@ function onKeyUp(event: KeyboardEvent) {
  * `pointer-lock` permission) — there, cursor-position steering takes over.
  */
 function onClick() {
-  if (altHeld.value || pointerLocked.value) return
+  // No mouse to capture on touch; a tap is a look-drag that never moved.
+  if (touch.value || altHeld.value || pointerLocked.value) return
   try {
     const request = root.value?.querySelector('canvas')?.requestPointerLock() as Promise<void> | undefined
     request?.catch?.(() => {})
@@ -217,6 +219,56 @@ function onMouseMove(event: MouseEvent) {
   view.yaw += event.movementX * MOUSE_SENSITIVITY
   view.pitch = Math.min(0.7, Math.max(-0.4, view.pitch + event.movementY * 0.0022))
   props.game.setLook(view.yaw)
+}
+
+/**
+ * Touch: the thumbstick drives `held`, any other finger on the world drags
+ * the camera. The stick's vector is quantised to the same 8 directions the
+ * keys produce, so the server sees ordinary `move` frames.
+ */
+const STICK_DEAD_ZONE = 0.25
+// sin(22.5°): each of the 8 sectors spans 45°.
+const STICK_SECTOR = 0.38
+const TOUCH_SENSITIVITY = 0.006
+
+let lookPointerId: number | null = null
+let lookLast = { x: 0, y: 0 }
+
+function onStickMove(x: number, y: number) {
+  const length = Math.hypot(x, y)
+  if (length < STICK_DEAD_ZONE) {
+    held.forward = held.back = held.left = held.right = false
+  }
+  else {
+    const nx = x / length
+    const ny = y / length
+    held.forward = ny < -STICK_SECTOR
+    held.back = ny > STICK_SECTOR
+    held.left = nx < -STICK_SECTOR
+    held.right = nx > STICK_SECTOR
+  }
+  props.game.setInput(held)
+}
+
+function onPointerDown(event: PointerEvent) {
+  if (event.pointerType !== 'touch' || lookPointerId !== null) return
+  lookPointerId = event.pointerId
+  lookLast = { x: event.clientX, y: event.clientY }
+}
+
+function onPointerMove(event: PointerEvent) {
+  if (event.pointerId !== lookPointerId) return
+  // Manual deltas: Safari reports movementX as 0 for touch pointers.
+  const dx = event.clientX - lookLast.x
+  const dy = event.clientY - lookLast.y
+  lookLast = { x: event.clientX, y: event.clientY }
+  view.yaw += dx * TOUCH_SENSITIVITY
+  view.pitch = Math.min(0.7, Math.max(-0.4, view.pitch + dy * TOUCH_SENSITIVITY * 0.7))
+  props.game.setLook(view.yaw)
+}
+
+function onPointerUp(event: PointerEvent) {
+  if (event.pointerId === lookPointerId) lookPointerId = null
 }
 
 /** Stop moving when the chat input steals focus or the tab is hidden. */
@@ -264,11 +316,15 @@ defineExpose({ pointerLocked, requestLock })
 <template>
   <div
     ref="root"
-    class="size-full select-none"
-    :class="altHeld ? 'cursor-default' : 'cursor-none'"
+    class="relative size-full touch-none select-none"
+    :class="altHeld || touch ? 'cursor-default' : 'cursor-none'"
     @click="onClick"
     @mousedown="onMouseDown"
     @contextmenu="onContextMenu"
+    @pointerdown="onPointerDown"
+    @pointermove="onPointerMove"
+    @pointerup="onPointerUp"
+    @pointercancel="onPointerUp"
   >
     <TresCanvas
       clear-color="#05070d"
@@ -284,5 +340,12 @@ defineExpose({ pointerLocked, requestLock })
         :view="view"
       />
     </TresCanvas>
+
+    <!-- Inside the scene root (not the HUD) so its touches never reach the look-drag. -->
+    <TouchJoystick
+      v-if="touch"
+      class="absolute bottom-6 left-6 z-10"
+      @move="onStickMove"
+    />
   </div>
 </template>

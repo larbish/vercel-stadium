@@ -16,7 +16,7 @@
 - [x] Jump (`Space`) & dash (`Shift`) — server-validated, predicted, dash flag synced; dash-from-standstill launches forward
 - [x] Elevation: solid props are walkable ledges in the shared authoritative plan; `SOLID_PROPS` distinguishes low vaultable clutter from tall unjumpable blockers
 - [x] Day/night cycle (15 min) + weather (clear→overcast→rain), synced via the server clock (`welcome.now`)
-- [x] Round WoW-style minimap (top-right), full arena, no fog
+- [x] ~~Round WoW-style minimap (top-right)~~ removed 2026-09-11: the HUD is brand + chat only (`occupancyGrid` in `shared/utils/arena.ts` is now unused)
 - [x] Protocol test suite (`scripts/ws-test.mjs`) — creates characters over `/api/auth`, then asserts `welcome`/`state`/`chat`/`pong`/`leave`/`kicked`
 - [x] Bot load-testing script (`scripts/spawn-bots.mjs`)
 
@@ -27,6 +27,7 @@
 - [x] **In-game Escape menu** (WoW-style): controls reference + fullscreen + log out + return-to-game. While pointer-locked the Escape keydown is browser-swallowed, so `GameScene` emits `unlock` on unintentional pointer-lock loss and the page opens the menu on it
 - [x] **Single session per identity**: `sessions` is keyed by identity id, so a second tab takes over — the newest socket wins and the old one gets a `kicked` frame (client stops reconnecting, shows an overlay with "play here instead"). `disconnect` is guarded by `sessions.get(id) === session` so the booted socket can't evict the live player
 - [x] Chat: bottom-left, arena-wide history, floating bubbles over rigs, system announcements (`announce()`); `MAX_CHAT_LENGTH` 240 so real questions fit; the Coach's cited URL is linkified
+- [x] **Touch controls** (2026-09-11): on coarse-pointer devices (`useTouchDevice`, `(pointer: coarse)`) `GameScene` shows a virtual thumbstick (`TouchJoystick.vue`, quantised to the same 8 boolean directions the keys send — no protocol change) and any other finger drags the camera; pointer lock is skipped. The chat leaves the left column for a bottom sheet behind a corner button, next to a menu button (no Escape key on a phone)
 
 ### AI showcase
 - [x] **The Coach, a Vercel docs agent** (2026-09-11) — in-process, run by the game loop (`server/utils/coach.ts`): a cheap classifier (`anthropic/claude-haiku-4.5`) decides whether a chat line is for it (by name, or any Vercel/product question), then an AI SDK `ToolLoopAgent` (`anthropic/claude-sonnet-4.6`, ≤8 steps) answers from the docs and cites the URL. Tools (`server/utils/coachDocs.ts`): the public docs MCP servers — Nuxt, Nuxt UI, Nuxt Content, Nuxt Image, Svelte, Docus, Comark — via `@ai-sdk/mcp` (lazy connect, kept open, tools prefixed per server), plus `search_docs`/`read_docs_page` over the `llms.txt` + `.md` endpoints of vercel.com, nextjs.org, turborepo.com, ai-sdk.dev (real search API), chat-sdk.dev, flags-sdk.dev, useworkflow.dev, v0.app; plus `arena_state` reading the live `snapshot()`. Vercel MCP (`mcp.vercel.com`) is OAuth-only, hence the sitemap route for platform docs. A new `coach` frame (`{thinking}`) shows "consulting the docs…" in chat and a "…" bubble over the triangle during the 10–20 s lookup. Speaks in the shared chat (no separate dialog); body is vercel.com's hero triangle (`app/utils/coach3d.ts`). Deliberately in-process, not eve — see `.claude/agents/coach-ai.md`
@@ -73,7 +74,6 @@ procedural Vercel stadium.
 ### 2. Make the arena worth standing in
 - [ ] Audio — nothing is implemented yet: footsteps, jump/land, dash whoosh, ambient wind/crowd, positional audio for other players (three.js `AudioListener`/`PositionalAudio`)
 - [ ] Emotes / a wave or cheer clip, so players can interact without typing
-- [ ] Mobile/touch controls (virtual stick + look drag)
 
 ### 3. Coach depth
 - [ ] Give the Coach more to see: time of day and weather in `arena_state`, so it can remark on the sky

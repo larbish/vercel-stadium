@@ -29,7 +29,11 @@ const focused = ref(false)
 const input = useTemplateRef('input')
 const scrollback = useTemplateRef('scrollback')
 
-const placeholder = computed(() => focused.value ? 'Press Esc to play…' : 'Press Enter to chat or ask Coach…')
+const touch = useTouchDevice()
+const placeholder = computed(() => {
+  if (touch.value) return 'Chat or ask Coach…'
+  return focused.value ? 'Press Esc to play…' : 'Press Enter to chat or ask Coach…'
+})
 
 const messages = computed<ChatMessage[]>(() => props.game.chatLog.value)
 
@@ -81,10 +85,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown))
           <span class="text-primary italic">{{ message.text }}</span>
         </template>
         <template v-else-if="message.npc">
-          <span
-            class="font-semibold"
-            :style="{ color: message.color }"
-          >{{ message.name }}: </span>
+          <span class="font-bold text-white">{{ message.name }}: </span>
           <span
             class="italic"
             :style="{ color: message.color }"

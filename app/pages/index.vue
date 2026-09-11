@@ -13,6 +13,14 @@ const gameScene = useTemplateRef('gameScene')
 const showMenu = ref(false)
 const fullscreen = ref(false)
 
+/** Touch: the chat is a sheet behind a corner button instead of a fixed column. */
+const touch = useTouchDevice()
+const showChat = ref(false)
+
+function toggleChat() {
+  showChat.value = !showChat.value
+}
+
 type View = 'checking' | 'creating' | 'playing'
 
 /**
@@ -175,7 +183,7 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
 <template>
   <div
     ref="gameRoot"
-    class="relative h-screen overflow-hidden bg-[#05070d]"
+    class="relative h-dvh overflow-hidden bg-[#05070d]"
   >
     <!-- The gate, for a visitor with no identity cookie yet. -->
     <CharacterGate
@@ -191,8 +199,8 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
         @unlock="showMenu = true"
       />
 
-      <!-- Left column: identity + connection status on top, the chat filling the rest. -->
-      <div class="pointer-events-none absolute inset-y-4 left-4 z-10 flex w-92 flex-col gap-2">
+      <!-- Left column: identity + connection status on top, the chat pinned to the bottom half. -->
+      <div class="pointer-events-none absolute inset-y-4 left-4 z-10 flex w-92 max-w-[calc(100%-2rem)] flex-col gap-2">
         <BrandMark
           :count="game.count.value"
           :dot-class="statusColor"
@@ -200,15 +208,45 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
           class="pointer-events-auto self-start rounded-lg bg-black/45 px-3 py-2 backdrop-blur"
         />
         <ChatPanel
+          v-if="!touch"
           :game="game"
-          class="min-h-0 flex-1"
+          class="mt-auto max-h-1/2 min-h-0 flex-1"
         />
       </div>
 
-      <!-- Top-right: minimap. -->
-      <aside class="pointer-events-none absolute right-4 top-4 z-10 flex flex-col items-end gap-2">
-        <MiniMap :game="game" />
-      </aside>
+      <!-- Touch: chat + menu buttons in the corner, the chat as a sheet above them. -->
+      <template v-if="touch">
+        <div
+          v-if="showChat"
+          class="absolute inset-x-3 bottom-16 z-30 h-1/2"
+        >
+          <ChatPanel
+            :game="game"
+            class="h-full"
+          />
+        </div>
+        <div class="absolute bottom-3 right-3 z-30 flex gap-2">
+          <UButton
+            icon="i-lucide-menu"
+            color="neutral"
+            variant="soft"
+            size="lg"
+            aria-label="Game menu"
+            class="rounded-full bg-black/45 backdrop-blur"
+            @click="openMenu"
+          />
+          <UButton
+            :icon="showChat ? 'i-lucide-x' : 'i-lucide-message-circle'"
+            color="neutral"
+            :variant="showChat ? 'solid' : 'soft'"
+            size="lg"
+            :aria-label="showChat ? 'Close chat' : 'Open chat'"
+            class="rounded-full backdrop-blur"
+            :class="!showChat && 'bg-black/45'"
+            @click="toggleChat"
+          />
+        </div>
+      </template>
 
       <!-- Coach: a discovery hint when near it. Coach answers questions
            about Vercel in the chat when addressed — no separate dialog. -->
@@ -220,7 +258,8 @@ const statusColor = computed(() => game.status.value === 'connected' ? 'bg-prima
       >
         <div
           v-if="coach.near.value"
-          class="pointer-events-none absolute inset-x-0 bottom-16 z-20 flex justify-center"
+          class="pointer-events-none absolute inset-x-0 z-20 flex justify-center"
+          :class="touch ? 'bottom-44' : 'bottom-16'"
         >
           <span class="flex items-center gap-1.5 rounded-full bg-black/60 px-3.5 py-1.5 text-[13px] text-highlighted ring ring-white/10 backdrop-blur">
             Coach is listening — <span class="text-muted">ask about Vercel in chat</span>

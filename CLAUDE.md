@@ -33,7 +33,7 @@ Work is divided into focused subagents in [.claude/agents/](.claude/agents/). Ea
 | --- | --- |
 | `world-sim` | `shared/**` — arena generation, `stepBody` kinematics, collision, and the protocol types. The server↔client invariant. |
 | `server-net` | `server/**` — the 20 Hz authoritative sim, crossws WS handler, sessions, and non-AI HTTP routes. |
-| `scene-3d` | TresJS rendering — camera, materials, day/night + weather, instanced architecture, character animation, minimap. |
+| `scene-3d` | TresJS rendering — camera, materials, day/night + weather, instanced architecture, character animation, touch controls. |
 | `game-ui` | 2D interface — HUD, chat, Escape menu, the entry flow, `useGame`. |
 | `coach-ai` | The Coach end to end — `server/utils/coach.ts` (in-process classifier + docs agent with `arena_state`), `server/utils/coachDocs.ts` (MCP roster + llms.txt/Markdown docs tools), `useCoach`, prompts/models/tools. |
 | `assets` | Blender/glTF pipeline — `scripts/*`, `public/models/**`, compression. |

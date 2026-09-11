@@ -4,9 +4,9 @@ description: >
   TresJS / three.js rendering — the 3D game view and everything drawn in it.
   Use for the camera (wall-aware third-person boom, pointer-lock delta look),
   sky/day-night cycle + weather, the procedural stadium (bowl, crowd, LED brand
-  bands, roof, floodlights), instanced kit props, character model playback, the
-  Coach rig, and the minimap.
-  Files: GameScene.client.vue, ArenaScene.vue, MiniMap.vue, and
+  bands, roof, floodlights), instanced kit props, character model playback, and
+  the Coach rig.
+  Files: GameScene.client.vue, ArenaScene.vue, TouchJoystick.vue, and
   app/utils/{textures,stadium,vercelBrands,coach3d,developerLook,palette}.ts.
 model: inherit
 ---

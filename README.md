@@ -88,7 +88,7 @@ The cookie rides the same-origin WebSocket upgrade and [`server/api/ws.ts`](serv
 
 ```
 app/
-├── pages/index.vue           # entry flow + HUD: brand, minimap, chat, Escape menu
+├── pages/index.vue           # entry flow + HUD: brand, chat, Escape menu
 ├── composables/useGame.ts    # connection, reconnect, roster, chat, clock sync
 ├── composables/useCoach.ts  # Coach near / speech / thinking state
 └── components/
